@@ -13,6 +13,25 @@ export default function App() {
     { name: "iphone12", price: 500, qty: 6 },
   ]);
 
+  const handleDelete = (index) => {
+    Swal.fire({
+      title: " Are you sure?",
+      text: " you can't undo this!!! ",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: " yes delete!",
+      cancelButtonText: "cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let updatedPhones = phones.filter((_, i) => i !== index);
+        setpones(updatedPhones);
+        Swal.fire("deleted ", "phone has removed", "success");
+      }
+    });
+  };
+
   const handelsubmit = (event) => {
     event.preventDefault();
     let newphone = {
@@ -66,7 +85,10 @@ export default function App() {
                 <th>{el.qty} </th>
                 <td>
                   <div className="d-flex justify-content-center gap-4">
-                    <button className=" btn bg-danger">
+                    <button
+                      className=" btn bg-danger"
+                      onClick={() => handleDelete(index)}
+                    >
                       <FaTrash className="text-white" />
                     </button>
 
